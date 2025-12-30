@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sport Pro V76 - OLTREILCAMPO</title>
+    <title>Sport Pro V77 - OLTREILCAMPO</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -26,17 +26,17 @@
         @media (max-width: 1024px) { .container { display: flex; flex-direction: column; } }
 
         .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; margin-bottom: 1rem; overflow: hidden; }
-        .panel-header { padding: 0.8rem 1rem; border-bottom: 1px solid var(--border); font-weight: 700; font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; }
+        .panel-header { padding: 0.8rem 1rem; border-bottom: 1px solid var(--border); font-weight: 700; font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; background: rgba(0,0,0,0.02); }
         .panel-body { padding: 1.25rem; }
 
         label { display: block; font-size: 0.65rem; font-weight: 700; color: var(--text-dim); margin-bottom: 4px; text-transform: uppercase; }
-        input, select { 
+        input, select, textarea { 
             background: var(--input-bg) !important; color: #000 !important; 
             border: 2px solid var(--border); padding: 12px; border-radius: 10px; 
             width: 100%; margin-bottom: 12px; font-size: 16px; font-family: inherit;
         }
 
-        .btn { background: var(--accent); color: white; border: none; padding: 14px; border-radius: 10px; font-weight: 700; cursor: pointer; width: 100%; transition: 0.2s; font-size: 0.9rem; border: none; }
+        .btn { background: var(--accent); color: white; border: none; padding: 14px; border-radius: 10px; font-weight: 700; cursor: pointer; width: 100%; transition: 0.2s; font-size: 0.9rem; }
         .btn-ghost { background: transparent; border: 2px solid var(--border); color: var(--text-main); margin-top: 8px; }
 
         .match-card { background: var(--bg); padding: 15px; border-radius: 12px; margin-bottom: 10px; border-left: 5px solid var(--accent); }
@@ -48,6 +48,8 @@
         .del-photo { position: absolute; top: 2px; right: 2px; background: var(--danger); color: white; border: none; border-radius: 4px; width: 22px; height: 22px; cursor: pointer; z-index: 10; font-weight: bold; }
 
         .profile-img { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--accent); object-fit: cover; cursor: pointer; }
+        .year-stat { background: rgba(255,255,255,0.05); padding: 8px; border-radius: 8px; margin-bottom: 5px; display: flex; justify-content: space-between; font-size: 0.8rem; }
+        
         .book-container { background: #000; padding: 15px; border-radius: 14px; border: 2px solid var(--gold); margin-top: 15px; text-align: center; }
         .book-img { max-width: 100%; height: auto; border: 1px solid var(--gold); border-radius: 4px; margin-bottom: 10px; }
 
@@ -65,7 +67,7 @@
 
 <header>
     <div class="logo-box">
-        <div class="logo">SPORTPRO V76</div>
+        <div class="logo">SPORTPRO V77</div>
         <div class="author-tag">Creato da OLTREILCAMPO</div>
     </div>
     <button onclick="openModal('settingsModal')" style="background:none; border:none; color:var(--text-main); font-size:1.5rem; cursor:pointer;">⚙️</button>
@@ -74,25 +76,25 @@
 <div id="authSection" style="max-width: 400px; margin: 2rem auto; width: 95%;">
     <div id="welcomeScreen" class="panel"><div class="panel-body">
         <button class="btn" onclick="loadDB(); setScreen('loginScreen')">Accedi al Profilo</button>
-        <button class="btn btn-ghost" onclick="setScreen('masterScreen')" style="margin-top:10px;">Nuovo Profilo</button>
+        <button class="btn btn-ghost" onclick="setScreen('masterScreen')" style="margin-top:10px;">Nuovo Profilo Atleta</button>
     </div></div>
     
     <div id="masterScreen" class="panel hidden"><div class="panel-body">
-        <label>Codice Sblocco Atleta</label>
+        <label>Codice Sblocco Master</label>
         <input type="password" id="inputMaster" placeholder="••••">
-        <button class="btn" onclick="verifyMaster()">Verifica</button>
-        <button class="btn btn-ghost" onclick="setScreen('welcomeScreen')">Indietro</button>
+        <button class="btn" onclick="verifyMaster()">Sblocca</button>
+        <button class="btn btn-ghost" onclick="setScreen('welcomeScreen')">Annulla</button>
     </div></div>
 
     <div id="createScreen" class="panel hidden"><div class="panel-body">
-        <label>Nome Completo</label><input id="newName" placeholder="Es: Mario">
-        <label>Squadra Attuale</label><input id="newTeam" placeholder="Es: Club Italia">
+        <label>Nome Atleta</label><input id="newName" placeholder="Mario Rossi">
+        <label>Squadra</label><input id="newTeam" placeholder="Nome Club">
         <label>PIN (4 cifre)</label><input type="tel" id="newPin" maxlength="4" placeholder="••••">
-        <button class="btn" onclick="registerUser()">Salva Atleta</button>
+        <button class="btn" onclick="registerUser()">Registra Atleta</button>
     </div></div>
 
     <div id="loginScreen" class="panel hidden"><div class="panel-body">
-        <label style="text-align:center;">PIN Privato</label>
+        <label style="text-align:center;">Inserisci il tuo PIN</label>
         <input type="tel" id="loginPin" maxlength="4" style="text-align:center; font-size: 2rem;">
         <button class="btn" onclick="doLogin()">Entra</button>
     </div></div>
@@ -106,8 +108,11 @@
             <input type="file" id="profileIn" hidden onchange="uploadProfile(event)">
             <h3 id="uiName" style="margin:10px 0 5px; text-transform:uppercase;">NOME</h3>
             <p id="uiTeam" style="color:var(--text-dim); margin-bottom:15px; font-size:0.8rem;">SQUADRA</p>
+            
             <div id="yearStats"></div>
             
+            <button class="btn btn-ghost" style="font-size: 0.7rem; margin-top: 15px;" onclick="openModal('feedbackModal')">💡 Suggerisci Miglioria</button>
+
             <div class="book-container">
                 <img src="copertina.webp" alt="Copertina" class="book-img" onerror="this.src='https://via.placeholder.com/150x210/000/fbbf24?text=NON+SOLO+PIEDI'">
                 <a href="https://0ra1ja-04.myshopify.com/products/non-solo-piedi" target="_blank" style="color:var(--gold); text-decoration:none; font-weight:800; font-size:0.65rem; text-transform:uppercase; display:block;">Acquista Libro</a>
@@ -116,7 +121,7 @@
     </div>
 
     <div class="panel">
-        <div class="panel-header">Archivio Gare</div>
+        <div class="panel-header">Archivio Prestazioni</div>
         <div class="panel-body" style="height: 75vh; overflow-y: auto;">
             <input type="text" id="matchSearch" placeholder="🔍 Cerca avversario..." onkeyup="renderUI()">
             <div id="matchList"></div>
@@ -124,20 +129,29 @@
     </div>
 
     <div class="panel">
-        <div class="panel-header" id="formTitle">Nuovo Report</div>
+        <div class="panel-header" id="formTitle">Nuovo Report Match</div>
         <div class="panel-body">
             <input type="hidden" id="editMatchId">
-            <label>Tipo Gara</label>
+            <label>Sede Gara</label>
             <select id="mVenue"><option value="Casa">🏠 Casa</option><option value="Trasferta">✈️ Trasferta</option></select>
-            <label>Avversario</label><input id="mOp" placeholder="Juventus">
-            <label>Risultato Finale</label><input id="mRes" placeholder="2-1">
-            <label>I tuoi Goal</label><input type="number" id="mGo" placeholder="0">
-            <label>Data</label><input type="date" id="mDate">
+            
+            <label>Avversario</label>
+            <input id="mOp" placeholder="Es: Juventus">
+            
+            <label>Risultato Squadra</label>
+            <input id="mRes" placeholder="Es: 2-0">
+            
+            <label>I tuoi Goal</label>
+            <input type="number" id="mGo" placeholder="0">
+            
+            <label>Data</label>
+            <input type="date" id="mDate">
+            
             <button class="btn" id="saveBtn" onclick="saveMatch()">Salva Report</button>
             <button class="btn btn-ghost hidden" id="cancelEditBtn" onclick="cancelEdit()">Annulla</button>
 
-            <div style="margin-top:20px;">
-                <label>Foto Match</label>
+            <div style="margin-top:25px;">
+                <label>Foto della Gara</label>
                 <div class="gallery-grid" id="mediaPreview"></div>
                 <button class="btn btn-ghost" style="font-size:0.7rem; margin-top:10px;" onclick="document.getElementById('galIn').click()">+ Aggiungi Foto</button>
                 <input type="file" id="galIn" hidden onchange="uploadMedia(event)" accept="image/*">
@@ -160,8 +174,18 @@
     </div>
 </div>
 
+<div id="feedbackModal" class="modal" onclick="closeModal('feedbackModal')">
+    <div class="modal-box" onclick="event.stopPropagation()">
+        <h3>Migliora l'App</h3>
+        <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:15px;">Cosa vorresti vedere nel prossimo aggiornamento?</p>
+        <textarea id="feedbackText" rows="4" placeholder="Scrivi qui la tua idea..."></textarea>
+        <button class="btn" onclick="sendFeedback()">Invia Suggerimento</button>
+        <button class="btn btn-ghost" onclick="closeModal('feedbackModal')" style="margin-top:10px;">Annulla</button>
+    </div>
+</div>
+
 <script>
-    const DB_KEY = "sportpro_v76_db";
+    const DB_KEY = "sportpro_v77_db";
     let db = { users: [] }, currentUser = null;
 
     function loadDB() { 
@@ -171,7 +195,7 @@
 
     function verifyMaster() { 
         if(document.getElementById('inputMaster').value === '01.01') setScreen('createScreen'); 
-        else alert("Codice errato."); 
+        else alert("Codice master errato."); 
     }
 
     function setScreen(id) { 
@@ -181,10 +205,10 @@
 
     function registerUser() {
         const n=document.getElementById('newName').value, t=document.getElementById('newTeam').value, p=document.getElementById('newPin').value;
-        if(!n || !p) return alert("Dati obbligatori!");
+        if(!n || !p) return alert("Nome e PIN sono obbligatori.");
         db.users.push({ id: Date.now(), name: n, team: t, pin: p, matches: [], media: [], profilePic: '' });
         localStorage.setItem(DB_KEY, JSON.stringify(db));
-        alert("Creato!"); location.reload();
+        alert("Atleta registrato!"); location.reload();
     }
 
     function doLogin() {
@@ -194,40 +218,26 @@
         else alert("PIN errato.");
     }
 
+    // CORREZIONE SALVA MATCH
     function saveMatch() {
-        const opInput = document.getElementById('mOp');
-        const resInput = document.getElementById('mRes');
-        const goInput = document.getElementById('mGo');
-        const dateInput = document.getElementById('mDate');
-        const venueInput = document.getElementById('mVenue');
+        const op = document.getElementById('mOp').value;
+        const res = document.getElementById('mRes').value;
+        const go = parseInt(document.getElementById('mGo').value) || 0;
+        const date = document.getElementById('mDate').value;
+        const venue = document.getElementById('mVenue').value;
         const editId = document.getElementById('editMatchId').value;
 
-        if(!opInput.value || !dateInput.value) return alert("Inserisci Avversario e Data!");
+        if(!op || !date) return alert("Avversario e Data sono obbligatori.");
 
         if(editId) {
             const idx = currentUser.matches.findIndex(m => m.id == editId);
-            currentUser.matches[idx] = { 
-                ...currentUser.matches[idx], 
-                op: opInput.value, 
-                res: resInput.value, 
-                go: parseInt(goInput.value) || 0, 
-                date: dateInput.value, 
-                venue: venueInput.value 
-            };
+            currentUser.matches[idx] = { ...currentUser.matches[idx], op, res, go, date, venue };
             cancelEdit();
         } else {
-            currentUser.matches.unshift({ 
-                id: Date.now(), 
-                op: opInput.value, 
-                res: resInput.value, 
-                go: parseInt(goInput.value) || 0, 
-                date: dateInput.value, 
-                venue: venueInput.value, 
-                teamAtTime: currentUser.team 
-            });
+            currentUser.matches.unshift({ id: Date.now(), op, res, go, date, venue, teamAtTime: currentUser.team });
         }
         saveData(); renderUI();
-        opInput.value=''; resInput.value=''; goInput.value=''; dateInput.value='';
+        document.getElementById('mOp').value=''; document.getElementById('mRes').value=''; document.getElementById('mGo').value=''; document.getElementById('mDate').value='';
     }
 
     function renderUI() {
@@ -237,7 +247,7 @@
         
         const yData = {};
         currentUser.matches.forEach(m => { const y = new Date(m.date).getFullYear(); if(!yData[y]) yData[y]=0; yData[y]+=m.go; });
-        document.getElementById('yearStats').innerHTML = Object.keys(yData).sort((a,b)=>b-a).map(y => `<div style="background:rgba(255,255,255,0.05); padding:8px; border-radius:8px; margin-bottom:5px; display:flex; justify-content:space-between; font-size:0.8rem;"><span>${y}</span><b>${yData[y]} Goal</b></div>`).join('');
+        document.getElementById('yearStats').innerHTML = Object.keys(yData).sort((a,b)=>b-a).map(y => `<div class="year-stat"><span>Anno ${y}</span><b>${yData[y]} Goal</b></div>`).join('');
 
         const searchTerm = document.getElementById('matchSearch').value.toLowerCase();
         const filteredMatches = currentUser.matches.filter(m => m.op.toLowerCase().includes(searchTerm));
@@ -253,21 +263,24 @@
 
         let html = '';
         for(let key in groups) {
-            html += `<div style="font-size:0.75rem; font-weight:800; color:var(--accent); text-transform:uppercase; margin:15px 0 5px; border-bottom:1px solid var(--border); padding-bottom:5px;">${key}</div>`;
+            html += `<div style="font-size:0.7rem; font-weight:800; color:var(--accent); text-transform:uppercase; margin:15px 0 5px; border-bottom:1px solid var(--border); padding-bottom:5px;">${key}</div>`;
             html += groups[key].map(m => `
                 <div class="match-card">
-                    <div style="font-size:0.6rem; color:var(--accent); font-weight:700;">${m.teamAtTime || currentUser.team}</div>
+                    <div style="font-size:0.6rem; color:var(--accent); font-weight:700; margin-bottom:5px;">${m.teamAtTime || currentUser.team}</div>
                     <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <div><b>${m.venue === 'Casa' ? '🏠' : '✈️'} VS ${m.op.toUpperCase()}</b><br><div class="match-res-tag">Ris: ${m.res}</div></div>
+                        <div>
+                            <b>${m.venue === 'Casa' ? '🏠' : '✈️'} VS ${m.op.toUpperCase()}</b><br>
+                            <div class="match-res-tag">Risultato: ${m.res}</div>
+                        </div>
                         <div style="font-size:1.2rem; font-weight:900;">${m.go}⚽</div>
                     </div>
-                    <div style="margin-top:10px; font-size:0.7rem; display:flex; gap:15px; opacity:0.8;">
+                    <div style="margin-top:10px; font-size:0.7rem; display:flex; gap:15px;">
                         <span onclick="editMatch(${m.id})" style="cursor:pointer;">✏️ Modifica</span>
                         <span onclick="deleteMatch(${m.id})" style="color:var(--danger); cursor:pointer;">🗑️ Elimina</span>
                     </div>
                 </div>`).join('');
         }
-        document.getElementById('matchList').innerHTML = html || '<p style="text-align:center; padding:20px;">Nessuna gara.</p>';
+        document.getElementById('matchList').innerHTML = html || '<p style="text-align:center; color:var(--text-dim); padding-top:20px;">Nessuna gara registrata.</p>';
         document.getElementById('mediaPreview').innerHTML = (currentUser.media || []).map((m, i)=>`<div class="gallery-item"><button class="del-photo" onclick="deletePhoto(${i})">×</button><img src="${m}" onclick="openOverlay('${m}')"></div>`).join('');
     }
 
@@ -279,8 +292,8 @@
         document.getElementById('mGo').value = m.go;
         document.getElementById('mDate').value = m.date;
         document.getElementById('mVenue').value = m.venue;
-        document.getElementById('formTitle').innerText = "✏️ Modifica";
-        document.getElementById('saveBtn').innerText = "Aggiorna";
+        document.getElementById('formTitle').innerText = "✏️ Modifica Report";
+        document.getElementById('saveBtn').innerText = "Aggiorna Gara";
         document.getElementById('cancelEditBtn').classList.remove('hidden');
     }
 
@@ -291,10 +304,25 @@
         document.getElementById('cancelEditBtn').classList.add('hidden');
     }
 
-    function deleteMatch(id) { if(confirm("Eliminare?")) { currentUser.matches = currentUser.matches.filter(m => m.id !== id); saveData(); renderUI(); } }
-    function deletePhoto(idx) { if(confirm("Eliminare?")) { currentUser.media.splice(idx, 1); saveData(); renderUI(); } }
-    function uploadMedia(e) { const r = new FileReader(); r.onload = (ev) => { if(!currentUser.media) currentUser.media=[]; currentUser.media.unshift(ev.target.result); saveData(); renderUI(); }; r.readAsDataURL(e.target.files[0]); }
-    function uploadProfile(e) { const r = new FileReader(); r.onload = (ev) => { currentUser.profilePic = ev.target.result; saveData(); renderUI(); }; r.readAsDataURL(e.target.files[0]); }
+    function deleteMatch(id) { if(confirm("Eliminare definitivamente?")) { currentUser.matches = currentUser.matches.filter(m => m.id !== id); saveData(); renderUI(); } }
+    function deletePhoto(idx) { if(confirm("Eliminare foto?")) { currentUser.media.splice(idx, 1); saveData(); renderUI(); } }
+    
+    function uploadMedia(e) { 
+        const r = new FileReader(); 
+        r.onload = (ev) => { 
+            if(!currentUser.media) currentUser.media=[]; 
+            currentUser.media.unshift(ev.target.result); 
+            saveData(); renderUI(); 
+        }; 
+        r.readAsDataURL(e.target.files[0]); 
+    }
+    
+    function uploadProfile(e) { 
+        const r = new FileReader(); 
+        r.onload = (ev) => { currentUser.profilePic = ev.target.result; saveData(); renderUI(); }; 
+        r.readAsDataURL(e.target.files[0]); 
+    }
+    
     function saveData() { const i = db.users.findIndex(u=>u.id===currentUser.id); db.users[i]=currentUser; localStorage.setItem(DB_KEY, JSON.stringify(db)); }
     function openOverlay(src) { document.getElementById('overlayImg').src = src; document.getElementById('photoOverlay').style.display='flex'; }
     function openModal(id) { document.getElementById(id).style.display='flex'; }
@@ -302,7 +330,16 @@
     function toggleTheme() { document.body.classList.toggle('light-mode'); }
     function updateTeam() { const nt = document.getElementById('changeTeamInput').value; if(nt) { currentUser.team = nt; saveData(); renderUI(); closeModal('settingsModal'); } }
     function exportBackup() { const blob = new Blob([JSON.stringify(db)], {type: 'application/json'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'backup.json'; a.click(); }
-    function importBackup(e) { const file = e.target.files[0]; const reader = new FileReader(); reader.onload = (ev) => { try { const imp = JSON.parse(ev.target.result); if(imp.users) { db = imp; localStorage.setItem(DB_KEY, JSON.stringify(db)); location.reload(); } } catch(err) { alert("Errore."); } }; reader.readAsText(file); }
+    function importBackup(e) { const file = e.target.files[0]; const reader = new FileReader(); reader.onload = (ev) => { try { const imp = JSON.parse(ev.target.result); if(imp.users) { db = imp; localStorage.setItem(DB_KEY, JSON.stringify(db)); location.reload(); } } catch(err) { alert("File non valido."); } }; reader.readAsText(file); }
+    
+    function sendFeedback() { 
+        const text = document.getElementById('feedbackText').value; 
+        if(!text) return alert("Inserisci un suggerimento!"); 
+        // CAMBIA L'EMAIL QUI SOTTO CON LA TUA
+        window.location.href = `mailto:fra.rinaldi79@icloud.com?subject=Feedback SportPro&body=${text}`; 
+        closeModal('feedbackModal'); 
+    }
+    
     function resetAccount() { if(confirm("CANCELLARE TUTTO?")) { localStorage.clear(); location.reload(); } }
 </script>
 </body>
