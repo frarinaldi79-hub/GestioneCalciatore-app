@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sport Pro V68 - Francesco Rinaldi</title>
+    <title>Sport Pro V69 - Francesco Rinaldi</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -19,7 +19,6 @@
         
         header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0.75rem 1.5rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
         .logo-box .logo { font-weight: 800; color: var(--accent); font-size: 1.1rem; text-transform: uppercase; line-height: 1; }
-        .author-tag { font-size: 0.6rem; color: var(--text-dim); text-transform: uppercase; margin-top: 4px; }
 
         .container { display: grid; grid-template-columns: 320px 1fr 320px; gap: 1rem; padding: 1rem; max-width: 1600px; margin: 0 auto; width: 100%; }
         @media (max-width: 1024px) { .container { display: flex; flex-direction: column; } }
@@ -28,35 +27,47 @@
         .panel-header { padding: 0.8rem 1rem; border-bottom: 1px solid var(--border); font-weight: 700; font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; }
         .panel-body { padding: 1rem; }
 
-        input, select, textarea { background: #fff !important; color: #000 !important; border: 1px solid var(--border); padding: 12px; border-radius: 8px; width: 100%; margin-bottom: 10px; font-size: 1rem; font-family: inherit; }
-        .btn { background: var(--accent); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 700; cursor: pointer; width: 100%; transition: 0.2s; display: block; text-align: center; text-decoration: none; }
+        /* INPUT UNIFORMATI */
+        input, select, textarea { 
+            background: #fff !important; 
+            color: #000 !important; 
+            border: 1px solid var(--border); 
+            padding: 12px; 
+            border-radius: 8px; 
+            width: 100%; 
+            margin-bottom: 10px; 
+            font-size: 1rem; 
+            font-family: inherit;
+            height: 48px; /* Altezza fissa per allineamento perfetto */
+        }
+        textarea { height: auto; }
+
+        .btn { background: var(--accent); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 700; cursor: pointer; width: 100%; transition: 0.2s; display: block; text-align: center; text-decoration: none; border: none; }
         .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text-main); margin-top: 5px; }
 
-        .privacy-notice { font-size: 0.7rem; color: var(--text-dim); margin-top: 15px; text-align: center; line-height: 1.4; padding: 10px; border-top: 1px solid var(--border); }
+        /* MATCH CARD ACTIONS */
+        .match-card { background: var(--bg); padding: 12px; border-radius: 10px; margin-bottom: 8px; border-left: 4px solid var(--accent); position: relative; }
+        .match-actions { display: flex; gap: 10px; margin-top: 8px; border-top: 1px solid var(--border); padding-top: 8px; }
+        .action-icon { cursor: pointer; font-size: 0.9rem; opacity: 0.7; transition: 0.2s; }
+        .action-icon:hover { opacity: 1; color: var(--accent); }
 
-        /* Copertina Libro */
+        /* GALLERY ACTIONS */
+        .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .gallery-item { position: relative; aspect-ratio: 1; border-radius: 6px; overflow: hidden; border: 1px solid var(--border); }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+        .del-photo { position: absolute; top: 2px; right: 2px; background: var(--danger); color: white; border: none; border-radius: 4px; width: 20px; height: 20px; font-size: 12px; cursor: pointer; z-index: 5; }
+
         .book-promo { background: #000; border: 2px solid var(--gold); border-radius: 12px; padding: 15px; margin-top: 15px; text-align: center; }
         .book-container { width: 140px; height: 190px; margin: 0 auto 10px; overflow: hidden; border-radius: 4px; border: 1px solid var(--gold); }
         .book-img { width: 100%; height: 100%; object-fit: cover; }
         .buy-now { background: var(--gold); color: #000; padding: 10px; border-radius: 6px; text-decoration: none; font-size: 0.75rem; font-weight: 800; display: block; text-transform: uppercase; }
 
-        /* Archivio e Ricerca */
-        .search-box { position: sticky; top: 0; background: var(--surface); z-index: 10; padding-bottom: 10px; border-bottom: 1px solid var(--border); margin-bottom: 15px; }
-        .month-group { margin-bottom: 20px; }
-        .month-title { font-size: 0.75rem; font-weight: 800; color: var(--accent); text-transform: uppercase; padding: 5px 0; border-bottom: 1px solid var(--border); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
-        .month-title::after { content: ""; flex: 1; height: 1px; background: var(--border); }
-        
-        .match-card { background: var(--bg); padding: 12px; border-radius: 10px; margin-bottom: 8px; border-left: 4px solid var(--accent); }
-        .match-team-tag { font-size: 0.6rem; color: var(--accent); font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 2px; }
-        
+        .month-title { font-size: 0.75rem; font-weight: 800; color: var(--accent); text-transform: uppercase; padding: 15px 0 5px; border-bottom: 1px solid var(--border); margin-bottom: 10px; }
         .profile-img { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--accent); object-fit: cover; cursor: pointer; }
-        .year-stat { background: rgba(255,255,255,0.05); padding: 8px; border-radius: 6px; margin-top: 5px; font-size: 0.75rem; display: flex; justify-content: space-between; }
-
-        #photoOverlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9999; display: none; align-items: center; justify-content: center; }
-        #photoOverlay img { max-width: 95%; max-height: 90%; border-radius: 8px; }
-        .hidden { display: none !important; }
+        .privacy-notice { font-size: 0.65rem; color: var(--text-dim); margin-top: 15px; text-align: center; padding: 10px; border-top: 1px solid var(--border); }
+        
         .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 2000; display: none; align-items: center; justify-content: center; }
-        .modal-box { background: var(--surface); padding: 1.5rem; border-radius: 12px; width: 90%; max-width: 350px; border: 1px solid var(--border); overflow-y: auto; max-height: 90vh; }
+        .modal-box { background: var(--surface); padding: 1.5rem; border-radius: 12px; width: 90%; max-width: 350px; border: 1px solid var(--border); }
     </style>
 </head>
 <body>
@@ -65,7 +76,7 @@
 
 <header>
     <div class="logo-box">
-        <div class="logo">SPORTPRO V68</div>
+        <div class="logo">SPORTPRO V69</div>
         <div class="author-tag">Francesco Rinaldi</div>
     </div>
     <button onclick="openModal('settingsModal')" style="background:none; border:none; color:var(--text-main); font-size:1.5rem; cursor:pointer;">⚙️</button>
@@ -76,7 +87,7 @@
         <button class="btn" onclick="loadDB(); setScreen('loginScreen')">Accedi al Profilo</button>
         <button class="btn btn-ghost" onclick="setScreen('masterScreen')" style="margin-top:10px;">Crea Nuova Scheda</button>
         <div class="privacy-notice">
-            🔒 <b>Privacy:</b> Le foto e i dati sono salvati <b>solo in locale</b>. <br>Aggiornare l'app non cancellerà i tuoi progressi.
+            🔒 <b>Privacy Locale:</b> Tutti i dati sono salvati solo su questo dispositivo.
         </div>
     </div></div>
     
@@ -87,18 +98,15 @@
     </div></div>
 
     <div id="createScreen" class="panel hidden"><div class="panel-body">
-        <h4 style="margin-top:0;">Nuovo Atleta</h4>
         <input id="newName" placeholder="Nome Completo">
         <input id="newTeam" placeholder="Squadra Attuale">
         <input type="tel" id="newPin" placeholder="Scegli PIN (4 cifre)">
-        <button class="btn" onclick="registerUser()">Salva Atleta</button>
-        <button class="btn btn-ghost" onclick="setScreen('welcomeScreen')" style="margin-top:10px;">Indietro</button>
+        <button class="btn" onclick="registerUser()">Crea Atleta</button>
     </div></div>
 
     <div id="loginScreen" class="panel hidden"><div class="panel-body">
-        <input type="tel" id="loginPin" placeholder="INSERISCI PIN" style="text-align:center; letter-spacing:8px;">
-        <button class="btn" onclick="doLogin()">Accedi</button>
-        <button class="btn btn-ghost" onclick="setScreen('welcomeScreen')" style="margin-top:10px;">Indietro</button>
+        <input type="tel" id="loginPin" placeholder="PIN" style="text-align:center; letter-spacing:8px;">
+        <button class="btn" onclick="doLogin()">Entra</button>
     </div></div>
 </div>
 
@@ -129,28 +137,31 @@
     </div>
 
     <div class="panel">
-        <div class="panel-header">Archivio Storico</div>
+        <div class="panel-header">Archivio Gare</div>
         <div class="panel-body" style="height: 75vh; overflow-y: auto; padding-top: 0;">
             <div class="search-box">
-                <input type="text" id="matchSearch" placeholder="🔍 Cerca avversario..." onkeyup="renderUI()" style="margin-bottom: 0; margin-top: 10px;">
+                <input type="text" id="matchSearch" placeholder="🔍 Filtra avversario..." onkeyup="renderUI()" style="margin-top: 10px;">
             </div>
             <div id="matchList"></div>
         </div>
     </div>
 
     <div class="panel">
-        <div class="panel-header">Nuovo Report</div>
+        <div class="panel-header" id="formTitle">Nuovo Report</div>
         <div class="panel-body">
+            <input type="hidden" id="editMatchId">
             <select id="mVenue"><option value="Casa">Casa</option><option value="Trasferta">Trasferta</option></select>
             <input id="mOp" placeholder="Avversario">
             <input id="mRes" placeholder="Risultato">
             <input type="number" id="mGo" placeholder="Goal">
             <input type="date" id="mDate">
-            <button class="btn" onclick="saveMatch()">Salva Gara</button>
+            <button class="btn" id="saveBtn" onclick="saveMatch()">Salva Report</button>
+            <button class="btn btn-ghost hidden" id="cancelEditBtn" onclick="cancelEdit()">Annulla Modifica</button>
+
             <div style="margin-top:25px;">
-                <p style="font-size:0.65rem; font-weight:800; color:var(--text-dim); text-transform:uppercase;">Album Media</p>
-                <div class="gallery-grid" id="mediaPreview" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px;"></div>
-                <button class="btn btn-ghost" style="font-size:0.7rem; margin-top:10px;" onclick="document.getElementById('galIn').click()">+ Foto</button>
+                <p style="font-size:0.65rem; font-weight:800; color:var(--text-dim); text-transform:uppercase;">Album Partita</p>
+                <div class="gallery-grid" id="mediaPreview"></div>
+                <button class="btn btn-ghost" style="font-size:0.7rem; margin-top:10px;" onclick="document.getElementById('galIn').click()">+ Aggiungi Foto</button>
                 <input type="file" id="galIn" hidden onchange="uploadMedia(event)" accept="image/*">
             </div>
         </div>
@@ -160,29 +171,27 @@
 <div id="settingsModal" class="modal" onclick="closeModal('settingsModal')">
     <div class="modal-box" onclick="event.stopPropagation()">
         <h3>Impostazioni</h3>
-        <input id="changeTeamInput" placeholder="Aggiorna Squadra">
-        <button class="btn" onclick="updateTeam()">Salva Modifiche</button>
+        <input id="changeTeamInput" placeholder="Cambia Squadra Attuale">
+        <button class="btn" onclick="updateTeam()">Aggiorna</button>
         <hr style="margin:15px 0; border:0; border-top:1px solid var(--border);">
-        <button class="btn btn-ghost" onclick="toggleTheme()">🌓 Cambia Tema</button>
+        <button class="btn btn-ghost" onclick="toggleTheme()">🌓 Tema Chiaro/Scuro</button>
         <button class="btn btn-ghost" onclick="exportBackup()">📥 Esporta Backup</button>
         <button class="btn btn-ghost" onclick="document.getElementById('importFile').click()">📤 Importa Backup</button>
         <input type="file" id="importFile" hidden onchange="importBackup(event)" accept=".json">
-        <button class="btn" style="background:var(--danger); margin-top:10px;" onclick="resetAccount()">🗑️ Reset Profilo</button>
+        <button class="btn" style="background:var(--danger); margin-top:10px;" onclick="resetAccount()">🗑️ Reset Totale</button>
     </div>
 </div>
 
 <div id="feedbackModal" class="modal" onclick="closeModal('feedbackModal')">
     <div class="modal-box" onclick="event.stopPropagation()">
-        <h3>Migliora l'App</h3>
-        <p style="font-size:0.8rem; color:var(--text-dim);">Cosa vorresti nel prossimo aggiornamento?</p>
-        <textarea id="feedbackText" rows="4" placeholder="Scrivi qui la tua idea..."></textarea>
-        <button class="btn" onclick="sendFeedback()">Invia Suggerimento</button>
-        <button class="btn btn-ghost" onclick="closeModal('feedbackModal')">Annulla</button>
+        <h3>Suggerimento</h3>
+        <textarea id="feedbackText" rows="4" placeholder="Cosa vorresti migliorare?"></textarea>
+        <button class="btn" onclick="sendFeedback()">Invia a Francesco</button>
     </div>
 </div>
 
 <script>
-    const DB_KEY = "sportpro_v68_db";
+    const DB_KEY = "sportpro_v69_db";
     let db = { users: [] }, currentUser = null;
 
     function loadDB() { const data = localStorage.getItem(DB_KEY); if(data) db = JSON.parse(data); }
@@ -194,10 +203,9 @@
     function registerUser() {
         const n=document.getElementById('newName').value, t=document.getElementById('newTeam').value, p=document.getElementById('newPin').value;
         if(!n || !p) return alert("Mancano dati.");
-        loadDB();
         db.users.push({ id: Date.now(), name: n, team: t, pin: p, matches: [], media: [], profilePic: '' });
         localStorage.setItem(DB_KEY, JSON.stringify(db));
-        alert("Atleta creato!"); location.reload();
+        alert("Creato!"); location.reload();
     }
 
     function doLogin() {
@@ -208,11 +216,41 @@
     }
 
     function saveMatch() {
-        const op=document.getElementById('mOp').value, res=document.getElementById('mRes').value, go=parseInt(document.getElementById('mGo').value)||0, date=document.getElementById('mDate').value, venue=document.getElementById('mVenue').value;
-        if(!op || !date) return alert("Inserisci i dati.");
-        currentUser.matches.unshift({ id: Date.now(), op, res, go, date, venue, teamAtTime: currentUser.team });
+        const op=document.getElementById('mOp').value, res=document.getElementById('mRes').value, go=parseInt(document.getElementById('mGo').value)||0, date=document.getElementById('mDate').value, venue=document.getElementById('mVenue').value, editId=document.getElementById('editMatchId').value;
+        if(!op || !date) return alert("Dati mancanti.");
+
+        if(editId) {
+            const idx = currentUser.matches.findIndex(m => m.id == editId);
+            currentUser.matches[idx] = { ...currentUser.matches[idx], op, res, go, date, venue };
+            cancelEdit();
+        } else {
+            currentUser.matches.unshift({ id: Date.now(), op, res, go, date, venue, teamAtTime: currentUser.team });
+        }
         saveData(); renderUI();
-        document.getElementById('mOp').value=''; document.getElementById('mRes').value=''; document.getElementById('mGo').value='';
+        document.getElementById('mOp').value=''; document.getElementById('mRes').value=''; document.getElementById('mGo').value=''; document.getElementById('mDate').value='';
+    }
+
+    function deleteMatch(id) { if(confirm("Eliminare questa gara?")) { currentUser.matches = currentUser.matches.filter(m => m.id !== id); saveData(); renderUI(); } }
+
+    function editMatch(id) {
+        const m = currentUser.matches.find(m => m.id === id);
+        document.getElementById('editMatchId').value = m.id;
+        document.getElementById('mOp').value = m.op;
+        document.getElementById('mRes').value = m.res;
+        document.getElementById('mGo').value = m.go;
+        document.getElementById('mDate').value = m.date;
+        document.getElementById('mVenue').value = m.venue;
+        document.getElementById('formTitle').innerText = "Modifica Gara";
+        document.getElementById('saveBtn').innerText = "Aggiorna Gara";
+        document.getElementById('cancelEditBtn').classList.remove('hidden');
+    }
+
+    function cancelEdit() {
+        document.getElementById('editMatchId').value = "";
+        document.getElementById('formTitle').innerText = "Nuovo Report";
+        document.getElementById('saveBtn').innerText = "Salva Report";
+        document.getElementById('cancelEditBtn').classList.add('hidden');
+        document.getElementById('mOp').value=''; document.getElementById('mRes').value=''; document.getElementById('mGo').value=''; document.getElementById('mDate').value='';
     }
 
     function renderUI() {
@@ -224,7 +262,7 @@
         
         const yData = {};
         currentUser.matches.forEach(m => { const y = new Date(m.date).getFullYear(); if(!yData[y]) yData[y]=0; yData[y]+=m.go; });
-        document.getElementById('yearStats').innerHTML = '<p style="font-size:0.65rem; color:var(--text-dim); font-weight:800; margin-bottom:5px;">GOAL PER ANNO</p>' + 
+        document.getElementById('yearStats').innerHTML = '<p style="font-size:0.6rem; color:var(--text-dim); font-weight:800;">GOAL PER ANNO</p>' + 
             Object.keys(yData).sort((a,b)=>b-a).map(y => `<div class="year-stat"><span>${y}</span><span><b>${yData[y]} Goal</b></span></div>`).join('');
 
         const searchTerm = document.getElementById('matchSearch').value.toLowerCase();
@@ -241,61 +279,43 @@
 
         let html = '';
         for(let key in groups) {
-            html += `<div class="month-group"><div class="month-title">${key}</div>`;
+            html += `<div class="month-title">${key}</div>`;
             html += groups[key].map(m => `
                 <div class="match-card">
-                    <span class="match-team-tag">${m.teamAtTime || 'Squadra N.D.'}</span>
+                    <span class="match-team-tag">${m.teamAtTime || currentUser.team}</span>
                     <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <div style="font-size:0.75rem;"><b>${m.op}</b> (${m.res})<br><small style="color:var(--text-dim)">${m.date}</small></div>
+                        <div style="font-size:0.75rem;"><b>${m.op}</b> (${m.res})<br><small style="color:var(--text-dim)">${m.date} - ${m.venue}</small></div>
                         <div style="color:var(--accent); font-weight:800; font-size:1.1rem;">${m.go} ⚽</div>
+                    </div>
+                    <div class="match-actions">
+                        <span class="action-icon" onclick="editMatch(${m.id})">✏️ Modifica</span>
+                        <span class="action-icon" style="color:var(--danger)" onclick="deleteMatch(${m.id})">🗑️ Elimina</span>
                     </div>
                 </div>
             `).join('');
-            html += `</div>`;
         }
-        document.getElementById('matchList').innerHTML = html || '<p style="text-align:center; color:var(--text-dim); font-size:0.8rem;">Nessuna gara</p>';
-        document.getElementById('mediaPreview').innerHTML = (currentUser.media || []).slice(0,6).map((m)=>`
-            <div style="aspect-ratio:1; overflow:hidden; border-radius:4px;"><img src="${m}" onclick="openOverlay('${m}')" style="width:100%; height:100%; object-fit:cover;"></div>`).join('');
+        document.getElementById('matchList').innerHTML = html || '<p style="text-align:center; padding:20px; color:var(--text-dim);">Nessuna gara trovata</p>';
+        
+        document.getElementById('mediaPreview').innerHTML = (currentUser.media || []).map((m, i)=>`
+            <div class="gallery-item">
+                <button class="del-photo" onclick="deletePhoto(${i})">×</button>
+                <img src="${m}" onclick="openOverlay('${m}')">
+            </div>`).join('');
     }
 
+    function deletePhoto(idx) { if(confirm("Eliminare questa foto?")) { currentUser.media.splice(idx, 1); saveData(); renderUI(); } }
+    function uploadMedia(e) { const r = new FileReader(); r.onload = (ev) => { if(!currentUser.media) currentUser.media=[]; currentUser.media.unshift(ev.target.result); saveData(); renderUI(); }; r.readAsDataURL(e.target.files[0]); }
+    function uploadProfile(e) { const r = new FileReader(); r.onload = (ev) => { currentUser.profilePic = ev.target.result; saveData(); renderUI(); }; r.readAsDataURL(e.target.files[0]); }
     function saveData() { const i = db.users.findIndex(u=>u.id===currentUser.id); db.users[i]=currentUser; localStorage.setItem(DB_KEY, JSON.stringify(db)); }
     function openOverlay(src) { document.getElementById('overlayImg').src = src; document.getElementById('photoOverlay').style.display='flex'; }
-    function uploadProfile(e) { const r = new FileReader(); r.onload = (ev) => { currentUser.profilePic = ev.target.result; saveData(); renderUI(); }; r.readAsDataURL(e.target.files[0]); }
-    function uploadMedia(e) { const r = new FileReader(); r.onload = (ev) => { if(!currentUser.media) currentUser.media=[]; currentUser.media.unshift(ev.target.result); saveData(); renderUI(); }; r.readAsDataURL(e.target.files[0]); }
-    
-    // BACKUP & FEEDBACK
-    function exportBackup() { const blob = new Blob([JSON.stringify(db)], {type: 'application/json'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'backup_sportpro.json'; a.click(); }
-    
-    function importBackup(e) {
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.onload = (ev) => {
-            try {
-                const imported = JSON.parse(ev.target.result);
-                if(imported.users) {
-                    db = imported;
-                    localStorage.setItem(DB_KEY, JSON.stringify(db));
-                    alert("Dati importati con successo! Ricarico...");
-                    location.reload();
-                }
-            } catch(err) { alert("File non valido."); }
-        };
-        reader.readAsText(file);
-    }
-
-    function sendFeedback() {
-        const text = document.getElementById('feedbackText').value;
-        if(!text) return alert("Scrivi qualcosa prima di inviare!");
-        const mailto = `mailto:fra.rinaldi79@icloud.it?subject=Feedback SportPro&body=Suggerimento da ${currentUser.name}: ${text}`;
-        window.location.href = mailto;
-        closeModal('feedbackModal');
-    }
-
     function updateTeam() { const nt = document.getElementById('changeTeamInput').value; if(nt) { currentUser.team = nt; saveData(); renderUI(); closeModal('settingsModal'); } }
     function openModal(id) { document.getElementById(id).style.display='flex'; }
     function closeModal(id) { document.getElementById(id).style.display='none'; }
     function toggleTheme() { document.body.classList.toggle('light-mode'); localStorage.setItem('theme', document.body.classList.contains('light-mode')?'light':'dark'); }
-    function resetAccount() { if(confirm("Cancellare tutto?")) { db.users = db.users.filter(u=>u.id!==currentUser.id); localStorage.setItem(DB_KEY, JSON.stringify(db)); location.reload(); } }
+    function exportBackup() { const blob = new Blob([JSON.stringify(db)], {type: 'application/json'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'backup_sport.json'; a.click(); }
+    function importBackup(e) { const file = e.target.files[0]; const reader = new FileReader(); reader.onload = (ev) => { try { const imp = JSON.parse(ev.target.result); if(imp.users) { db = imp; localStorage.setItem(DB_KEY, JSON.stringify(db)); location.reload(); } } catch(err) { alert("File non valido."); } }; reader.readAsText(file); }
+    function sendFeedback() { const text = document.getElementById('feedbackText').value; if(!text) return; window.location.href = `mailto:fra.rinaldi79@icloud.it?subject=Feedback&body=${text}`; closeModal('feedbackModal'); }
+    function resetAccount() { if(confirm("ATTENZIONE: Cancellerai tutto permanentemente. Procedere?")) { localStorage.clear(); location.reload(); } }
 </script>
 </body>
 </html>
